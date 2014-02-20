@@ -1,0 +1,1 @@
+git clone https://github.com/campaign/ueditor.git D:\\workspace\\online\\ueditor
