@@ -11,7 +11,25 @@ switch ($_POST['f']) {
     case 'nextProgress':
         nextProgress();
         break;
+    case 'rollbackProgress':
+        rollbackProgress($_POST['dest']);
+        break;
 };
+function rollbackProgress($dest)
+{
+    //xml id ++
+    $doc = doWithXML::openXML('../progress.xml');
+    $doc->getElementsByTagName( "currentProgess" )->item(0)->setAttribute('progessId',$dest);
+    $doc->save('../progress.xml');
+    $doc = doWithXML::openXML('../progress.xml');
+    $next = (int)($doc->getElementsByTagName( "currentProgess" )->item(0)->
+        attributes->item(0)->nodeValue);
+    if($next==$dest){
+        echo 'true';
+    }else{
+        echo 'false';
+    }
+}
 function nextProgress()
 {
     //xml id ++

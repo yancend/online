@@ -1,1 +1,3 @@
-git clone https://github.com/campaign/ueditor.git D:\\workspace\\online\\ueditor
+@echo off
+setlocal EnableDelayedExpansion
+C:\Users\dongyancen\AppData\Local\Google\Chrome\chrome.exe

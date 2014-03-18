@@ -25,7 +25,9 @@
 </form>
 
 
-<button onclick="checkDetail()" style="float:left;"> 下载</button>
+<button onclick="checkDetail(0)" style="float:left;"> 下载</button>
+<button onclick="checkDetail(1)" style="float:left;"> 更新</button>
+
 <div id='result' style="display: none"><p></p></div>
 
 <button id='nextButton' onClick="nextStep();">下一步
@@ -39,15 +41,21 @@
         $("#githubRepos")[0].value = Config['githubRepos'];
     }
     defaultFunction();
-    function checkDetail() {
+    function checkDetail(option) {
         if (!$("#tagNum")[0].value ) {
             alert("请填写完整信息");
             return;
         }
         var downloadSuccessMsg = "下载通过 !";
         var downloadFailMsg = "下载异常 !";
+        var phpUrl;
+        if(option){
+            phpUrl = 'php/updateRepos.php'
+        }else{
+            phpUrl = 'php/getRepos.php';
+        }
         $.ajax({
-            url: 'php/getRepos.php',
+            url: phpUrl,
             type: 'post',
             data: $("#form").serialize(),
             success: function (msg) {

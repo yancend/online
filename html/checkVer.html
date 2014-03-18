@@ -23,6 +23,8 @@
     <div id='result' style="display: none"><p></p></div>
     <button id='nextButton' disabled="disabled" onClick="nextStep();">下一步
     </button>
+    <button id='rollbackButton'  onClick="rollback(0);">未通过    </button>
+
 </div>
 </body>
 <script type="text/javascript">
@@ -46,16 +48,15 @@
             type: 'post',
             data: $("#form").serialize(),//todo 再传一个版本号
             success: function (msg) {
-                if (!msg || !eval("(" + msg + ")")) {//没有返回结果
+                if (!msg || !eval("msg")) {//没有返回结果
                     //todo
                     $("#result").attr('style',"display: block");
                     $("#result").text(savedFailMsg);
                     return;
                 }
                 else {
-                    var rel = eval("(" + msg + ")");
+                    var rel = eval("msg");
                     if(rel == true){
-                        alert(rel);
 
                         $("#nextButton").attr('disabled', "");
                         //todo

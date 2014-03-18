@@ -9,7 +9,10 @@ class P_Config
 {
     public  static $progressConfig = array(
       './html/download.html',
-        './html/checkVer.html'
+        './html/checkVer.html',
+        './html/grunt.html' ,//生成dist ,检查文件,检查编码
+        './html/runCases.html'               //粘贴demo和case页面,打开
+
     );
     public  static $ws = "D:\\workspace\\online";
 //    public static $vToCheck = array(
