@@ -13,51 +13,96 @@
 <p>runCases and open demo</p>
 <button onclick="checkDetail()" style="float:left;"> 检测</button>
 <div id='result' style="display: none"><p></p></div>
+<button id='manual' disabled="disabled" onClick='$("#nextButton").attr("disabled", "");'>手动通过</button>
 
-<button id='nextButton' disabled="disabled" onClick="nextStep();">下一步    </button>
+<button id='nextButton' disabled="disabled" onClick="nextStep();">下一步</button>
 
-<button id='rollbackButton'  onClick="rollback(0);">未通过    </button>
+<button id='rollbackButton' onClick="rollback(0);">未通过</button>
 </body>
 <script type="text/javascript">
 
     //todo 从配置设默认值
-    function defaultFunction(){
+    function defaultFunction() {
 
     }
     defaultFunction();
     function checkDetail() {
 
-        var ws = {};
-        ws['basePath']= Config["basePath_dist"];
-        var  failMsg = "grunt调用异常 !";
-        $.ajax( {
-            url:"php/checkEncode.php",
-            type:'post',
-            data:ws,
-            success:function ( msg ) {
-                if (!msg ) {//没有返回结果或者返回false
-                    //todo
-//                    $("#result").attr('style',"display: block");
-//                    $("#result").text(failMsg);
+        var ws = {basePath: Config['basePath_dist']};
+        var failMsg = "grunt调用异常 !";
+        var distPaths = Config['distPaths'];
+        if (document.getElementsByTagName('a').length < 1) {
+            for (var i = 0; i < distPaths.length; i++) {
+                var d = distPaths[i].split("/");
+                $("body").append("<br/><a href='" + distPaths[i] + "' target='_blank'>" + d[d.length - 1] + "</a>");
+            }
+        }
+
+        $.ajax({
+            url: "php/runCases.php",
+            type: 'post',
+            data: ws,
+            success: function (msg) {
+                if (!msg || !eval("msg")) {//没有返回结果或者返回false
                     return;
                 }
                 else {
-                    debugger
-                    $("#nextButton").attr('disabled', "");
-//                    checkFiles();
-//                    var a=new   ActiveXObject("wscript.shell");
-//                    a.run("C:/Users/dongyancen/AppData/Local/Google/Chrome/chrome.exe http://localhost/");
-//                    $("#result").attr('style',"display: block");
-//                    $("#result").text("");
+                    var rel = eval("msg");
+                    if (rel == true) {
+                        $("#manual").attr("disabled", "");
+
+                        var a = new ActiveXObject("wscript.shell");
+                        // Internet 自定义级别
+//                        对没有标记为安全的ActiveX控件进行初始化和脚本运行
+                        for (var j = 0; j < Config['distFileNamesToCheck'].length; j++) {
+                            a.run("C:/Users/dongyancen/AppData/Local/Google/Chrome/chrome.exe " + Config['basePath'] + Config['distFileNamesToCheck'][j] + "/autoCases.html ");
+                        }
+
+                        var checkRel = window.setInterval(function () {
+                            checkResult(checkRel);
+                        }, 5000);
+                    }
+
+                    else {
+                        //todo
+                        $("#result").attr('style', "display: block");
+                        $("#result").text('检测未通过:\n' + rel);
+                        return;
+                    }
                 }
 
             },
-            error:function ( xhr, msg ) {
-                alert( "error 2");
+            error: function (xhr, msg) {
             }
-        } );
+        });
     }
+    function checkResult(checkRel) {
 
+        $.ajax({
+            url: 'php/checkRel.php',
+            type: 'post',
+            data: {},
+            success: function (msg) {
+                if (msg == '') {//没有返回结果或者返回false,清空展示区
+                    return false;
+                }else if(eval("(" + msg + ")") == 0){
+                    $("#result").attr('style',"display: block");
+                    $("#result").text('检测通过:\n');
+                    window.clearInterval(checkRel);
+
+                    return true;
+                }
+                else {
+                    $("#result").attr('style',"display: block");
+                    $("#result").text('检测未通过,failed:\n'+eval("(" + msg + ")"));
+                    window.clearInterval(checkRel);
+                    return true;
+                }
+            },
+            error: function (xhr, msg) {
+            }
+        });
+    }
     //todo 加一个能点开bat直接编辑的按钮
 </script>
 </html>

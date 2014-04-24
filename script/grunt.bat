@@ -11,8 +11,6 @@ for %%a in (%severLang%) do (
 		if exist %configPath%dist\%%b-%%a rd /s /q %configPath%dist\%%b-%%a
 
 		%2 --server=%%a --encode=%%b
-        copy /y %~p0\jquery.js %configPath%dist\%%b-%%a\jquery.js
-
 	)
 )
 

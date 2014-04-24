@@ -95,5 +95,5 @@ function isUTF8($str)//需要在php.ini中开启extension=php_mbstring.dll
         return 0;
     }
 }
-$content = file_get_contents("D:\\workspace\\ueditormini\\dist\\gbk-php\\index.html");
+//$content = file_get_contents("D:\\workspace\\ueditormini\\dist\\gbk-php\\index.html");
 //echo isUTF8($content);
