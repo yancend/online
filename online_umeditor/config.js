@@ -2,13 +2,12 @@
  * Created by dongyancen on 14-1-3.
  */
 var Config = {
-    'localWS':'D:\\workspace\\online\\ueditor',
-    'githubRepos':'https://github.com/fex-team/umeditor.git',//https://github.com/fex-team/umeditor.git
-//gitCheckout.bat https://github.com/campaign/ueditor.git D:\\workspace\\online\\ueditor v1.3.6
-    //'./script/gitCheckout.bat '+ githubRepos +' '+localWS +' ' + tagNum
+    'localWS':'D:\\workspace\\online\\online_umeditor\\umeditor',
+    'githubRepos':'https://github.com/fex-team/umeditor.git',
     'tagNum':'v1.2.2',
     'Version':'1.2.2',
-    'basePath':'http://localhost/online/ueditor/dist/',
+    'basePath':'http://localhost/online/online_umeditor/umeditor/dist/',
+    'proPath':'umeditor',
     'basePath_dist':'dist',
     'basePath_download':'\\download',
     'distPaths':['http://localhost:8000/online/ueditor/dist/utf8-asp',

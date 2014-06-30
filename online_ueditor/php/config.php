@@ -8,11 +8,11 @@
 //V_Config 的结构与内容由project的需求决定
 class V_Config
 {
-    public static $workspace = 'D:\workspace\online\ueditor';
-    public static $version = '1.1.0';
+    public static $workspace = 'D:\workspace\online\online_ueditor\ueditor';
+    public static $version = '1.4.3';
     public  static $servers = array('php','jsp','net','asp');
     public  static $codes = array('utf8','gbk');
-    public  static $distName = 'umeditor';//$servers.'_'.$codes.'_'.$distName
+    public  static $distName = 'ueditor';//$servers.'_'.$codes.'_'.$distName
     public  static $grundCMD ='C:\Users\dongyancen\AppData\Roaming\npm\grunt.cmd';
     public  static $distFileNames = array(
         'gbk-jsp',
@@ -30,16 +30,21 @@ class V_Config
         array('\_src\editor.js','/version\s*:\s*"([^"]+)"/i'),// version : "1.1.0"
         array('\package.json','/"version"\s*:\s*"([^"]+)"/i')//"version": "1.1.0",
     );
+    private static  $charsetExp = '/charset\s*=\s*"?([^"]+)"?/i';
     public static $encodeToCheck = array(
         //在工程目录下,要检查encode的路径和文件类型,可选的参数:自定义的匹配表达式
         array('','html',array('/charset\s*=\s*"?([^"]+)"?/i')),//默认匹配: charset=gbk,charset="gbk"
-        array('\dialogs\map','html',array('/charset\s*=\s*"?([^"]+)"?/i')),//默认匹配: charset=gbk,charset="gbk"
-        array('\dialogs\formula','html',array('/charset\s*=\s*"?([^"]+)"?/i')),//默认匹配: charset=gbk,charset="gbk"
-        array('\dialogs\video','css',array('/@charset\s*"([^"]+)"/i')),//默认匹配: @charset "gbk";
-        //todo 没有制定文件夹的工程就不检查,能容错
-        array('\php','php',array('/charset\s*=\s*([^"]+)/i')),//默认匹配:  charset=gbk
+        array('\dialogs','html',array('/charset\s*=\s*"?([^"]+)"?/i')),//默认匹配: charset=gbk,charset="gbk"
+//        array('\dialogs\map','html',array('/charset\s*=\s*"?([^"]+)"?/i')),//默认匹配: charset=gbk,charset="gbk"
+//        array('\dialogs\map','html',array('/charset\s*=\s*"?([^"]+)"?/i')),//默认匹配: charset=gbk,charset="gbk"
+//        array('\dialogs\formula','html',array('/charset\s*=\s*"?([^"]+)"?/i')),//默认匹配: charset=gbk,charset="gbk"
+        array('\dialogs','js',array('/encode=([^&]+)/i')),//默认匹配: @charset "gbk";
+
+        array('\dialogs','css',array('/@charset\s*"([^"]+)"/i')),//默认匹配: @charset "gbk";
+//        todo 没有制定文件夹的工程就不检查,能容错
+        array('\php','php',array('/charset\s*=\s*([^"]+)/i','/\'unicode\'\s*,\s*\'([^\']+)\'/i')),//默认匹配:  charset=gbk
         array('\jsp','jsp',array('/charset\s*=\s*([^"]+)/i','/setCharacterEncoding\("([^"]+)"\)/i','/pageEncoding="([^"]+)"/i')),//默认匹配:  charset=gbk
-        array('\asp','asp',array('/charset\=([^"]+)/i','/GetCharset\s*=\s*"([^"]+)"/i'))//charset=utf-8 GetCharset = "utf-8"
+        array('\asp','asp',array('/charset\=([^"]+)/i','/GetCharset\s*=\s*"([^"]+)"/i','/Charset\s*=\s*"([^"]+)"/i','/"CharSet"\s*,\s*"([^"]+)"/i'))//charset=utf-8 GetCharset = "utf-8" ,Charset="gbk","CharSet","gbk"
     );
     public static $distPath = '\dist';
     public static $serverFilesToCheck = array(

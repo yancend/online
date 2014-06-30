@@ -8,11 +8,13 @@
 //V_Config 的结构与内容由project的需求决定
 class V_Config
 {
-    public static $workspace = 'D:\workspace\online\ueditor';
+    public  static $ws = "D:\\workspace\\online\\online_umeditor";//这里是用来找script代码的
+    public static $workspace = 'D:\workspace\online\online_umeditor\umeditor';
     public static $version = '1.1.0';
     public  static $servers = array('php','jsp','net','asp');
     public  static $codes = array('utf8','gbk');
     public  static $distName = 'umeditor';//$servers.'_'.$codes.'_'.$distName
+    public static  $basePath_dist = 'dist';
     public  static $grundCMD ='C:\Users\dongyancen\AppData\Roaming\npm\grunt.cmd';
     public  static $distFileNames = array(
         'gbk-jsp',
@@ -43,30 +45,22 @@ class V_Config
     );
     public static $distPath = '\dist';
     public static $serverFilesToCheck = array(
-        'php'=>array('/php/getContent.php','/php/imageUp.php','/php/Uploader.class.php'),
-        'asp'=>array('/asp/getContent.asp','/asp/imageUp.asp','/asp/Uploader.Class.asp'),
-        'jsp'=>array('/jsp/commons-fileupload-1.2.2.jar','/jsp/getContent.jsp','/jsp/imageUp.jsp','/jsp/ueditor-mini.jar','/jsp/Uploader.java'),
-        'net'=>array('/net/getContent.ashx','/net/imageUp.ashx','/net/Uploader.cs')
+        'gbk-php'=>array('\php\getContent.php','\php\imageUp.php','\php\Uploader.class.php'),
+        'utf8-php'=>array('\php\getContent.php','\php\imageUp.php','\php\Uploader.class.php'),
+
+        'gbk-asp'=>array('\asp\getContent.asp','\asp\imageUp.asp','\asp\Uploader.Class.asp','\asp\json.asp'),
+        'utf8-asp'=>array('\asp\getContent.asp','\asp\imageUp.asp','\asp\Uploader.Class.asp','\asp\json.asp'),
+        'gbk-jsp'=>array('\jsp\commons-fileupload-1.2.2.jar','\jsp\getContent.jsp','\jsp\imageUp.jsp','\jsp\ueditor-mini.jar','\jsp\Uploader.java'),
+        'utf8-jsp'=>array('\jsp\commons-fileupload-1.2.2.jar','\jsp\getContent.jsp','\jsp\imageUp.jsp','\jsp\ueditor-mini.jar','\jsp\Uploader.java'),
+        'gbk-net'=>array('\net\getContent.ashx','\net\imageUp.ashx','\net\Uploader.cs'),
+        'utf8-net'=>array('\net\getContent.ashx','\net\imageUp.ashx','\net\Uploader.cs')
     );
-//    public static function getServerFilesToCheck(){
-//       $filesToCheck = array();
-//
-//        array_push($filesToCheck,array('\gbk-php',V_Config::$serverFilesPaths['php']));
-//        array_push($filesToCheck,array('\utf8-php',V_Config::$serverFilesPaths['php']));
-//        array_push($filesToCheck,array('\gbk-asp',V_Config::$serverFilesPaths['asp']));
-//        array_push($filesToCheck,array('\utf8-asp',V_Config::$serverFilesPaths['asp']));
-//        array_push($filesToCheck,array('\gbk-jsp',V_Config::$serverFilesPaths['jsp']));
-//        array_push($filesToCheck,array('\utf8-jsp',V_Config::$serverFilesPaths['jsp']));
-//        array_push($filesToCheck,array('\gbk-net',V_Config::$serverFilesPaths['net']));
-//        array_push($filesToCheck,array('\utf8-net',V_Config::$serverFilesPaths['net']));
-//
-//        return $filesToCheck;
-//    }
+
     public static $sameFilesWithSourceToCheck = array(
-        '\dialog' =>false,//如果为真,要检查同时检查生成文件的大小是否与源文件相同
-        '\lang' =>true,
-        '\third-party'  =>true,
-        '\themes\default\images ' =>true
+        'dialogs' ,//
+        'lang' ,
+        'third-party' ,
+        'themes\default\images '
 
     );
     public static $certainToCheck = array(
@@ -74,7 +68,7 @@ class V_Config
         '\themes\default\css\umeditor.css',
         '\themes\default\css\umeditor.min.css',
         '\index.html',
-        '\umeditor.config',
+        '\umeditor.config.js',
         '\umeditor.js',
         '\umeditor.min.js'
     );
@@ -91,9 +85,6 @@ class V_Config
 
         'http://15.ueditortest.newoffline.bae.baidu.com/build/build_down.php?t=1_0_0-gbk-jsp&type=mini'
     );
-//public static function distFileNames(){
-//
-//}
 
 };
 function isUTF8($str)//需要在php.ini中开启extension=php_mbstring.dll

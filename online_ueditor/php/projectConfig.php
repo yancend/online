@@ -15,7 +15,7 @@ class P_Config
         './html/download.html',
  './html/pass.html'
     );
-    public  static $ws = "D:\\workspace\\online";
+    public  static $ws = "D:\\workspace\\online\\online_ueditor";
 //    public static $vToCheck = array(
 //        //在工程目录下,要检查version的文件路径和匹配语句
 //        array('\_src\editor.js','/version\s*:\s*"([^"]+)"/i'),// version : "1.1.0"
