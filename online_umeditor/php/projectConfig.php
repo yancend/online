@@ -14,4 +14,5 @@ class P_Config
         './pages/runCases.html',//粘贴demo和case页面,打开
         './pages/pass.html'
     );
+    public  static $ws = "D:\\workspace\\online\\online_umeditor";
 }
