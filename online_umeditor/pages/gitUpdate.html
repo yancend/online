@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+
+    <title></title>
+    <script type="text/javascript" src="../lib/jquery-1.5.1.js"></script>
+    <script type="text/javascript" src="./config.js"></script>
+    <script type="text/javascript" src="./js/helpers.js"></script>
+
+</head>
+<body>
+<form id="form" name="submitfForm" method="post" style="">
+    <!--todo 给一个默认地址,配置在config 里-->
+    <p > tag号
+        <input id="tagNum"
+               name="tagNumName" type="text"/></p>
+    <p style="display: none">本地工程地址
+        <input id="localWS"
+               name="localWorkSpaceName" type="text" /></p>
+
+    <p style="display: none">github地址
+        <input id="githubRepos"
+               name="githubWorkSpaceName" type="text"/>
+</form>
+
+
+<button onclick="checkDetail(0)" style="float:left;"> 下载</button>
+<button onclick="checkDetail(1)" style="float:left;"> 更新</button>
+
+<div id='result' style="display: none"><p></p></div>
+
+<button id='nextButton' onClick="nextStep();">下一步
+    <!--disabled="disabled"-->
+</button>
+<script type="text/javascript">
+    //todo 从配置设默认值
+    function defaultFunction(){
+        $("#tagNum")[0].value = Config['tagNum'];//默认值
+        $("#localWS")[0].value = Config['localWS'];
+        $("#githubRepos")[0].value = Config['githubRepos'];
+    }
+    defaultFunction();
+    function checkDetail(option) {
+        if (!$("#tagNum")[0].value ) {
+            alert("请填写完整信息");
+            return;
+        }
+        var downloadSuccessMsg = "下载通过 !";
+        var downloadFailMsg = "下载异常 ! :";
+        var phpUrl;
+        if(option){
+            phpUrl = 'php/updateRepos.php'
+        }else{
+            phpUrl = 'php/getRepos.php';
+        }
+        $.ajax({
+            url: phpUrl,
+            type: 'post',
+            data: $("#form").serialize(),
+            success: function (msg) {
+                if (!msg || !eval("(" + msg + ")")) {//没有返回结果或者返回false
+                    //todo
+                    $("#result").attr('style',"display: block");
+                    $("#result").text(downloadFailMsg);
+                    return;
+                }
+                else {
+                    var rel = eval("(" + msg + ")");
+                    if(rel === true){
+
+                        $("#nextButton").attr('disabled', "");
+                        //todo
+                    $("#result").attr('style',"display: block");
+                    $("#result").text(downloadSuccessMsg);
+                    }else{
+                        //todo
+                        $("#result").attr('style',"display: block");
+                        $("#result").text(downloadFailMsg+rel);
+                        return;
+                    }
+
+                }
+            },
+            error: function (xhr, msg) {
+                alert("error 1");
+            }
+        });
+    }
+</script>
+</body>
+</html>
