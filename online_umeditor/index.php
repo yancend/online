@@ -6,7 +6,7 @@
  * Time: 下午4:46
  */
 //读取当前进度
-require_once('../php/class/doWithXML.php');
+require_once('./php/class/doWithXML.php');
 $doc = doWithXML::openXML('progress.xml');
 $currentProgess = $doc->getElementsByTagName( "currentProgess" )->item(0)->
     attributes->item(0)->nodeValue;
